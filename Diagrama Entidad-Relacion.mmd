@@ -1,0 +1,41 @@
+erDiagram
+    EQUIPOS ||--o{ JUGADORES : "tiene"
+    EQUIPOS ||--o{ PARTIDOS : "juega_local"
+    EQUIPOS ||--o{ PARTIDOS : "juega_visitante"
+    JUGADORES }o--|| POSICIONES : "tiene"
+    JUGADORES ||--o{ GOLES : "anota"
+    PARTIDOS ||--o{ GOLES : "registra"
+
+    EQUIPOS {
+        bigint id_equipo PK
+        varchar nombre
+    }
+
+    JUGADORES {
+        bigint id_jugador PK
+        varchar nombre
+        date fecha_nacimiento
+        bigint id_equipo FK
+        bigint id_posicion FK
+    }
+
+    POSICIONES {
+        bigint id_posicion PK
+        varchar nombre
+    }
+
+    PARTIDOS {
+        bigint id_partido PK
+        bigint id_equipo_local FK
+        bigint id_equipo_visitante FK
+        int goles_local
+        int goles_visitante
+        date fecha_partido
+    }
+
+    GOLES {
+        bigint id_gol PK
+        bigint id_partido FK
+        bigint id_jugador FK
+        int minuto
+    }

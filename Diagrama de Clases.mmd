@@ -1,0 +1,243 @@
+classDiagram
+%% CAPA DE ENTIDADES
+    class Equipos {
+        -Long idEquipo
+        -String nombre
+        -List~Jugadores~ jugadores
+        -List~Partidos~ partidosLocal
+        -List~Partidos~ partidosVisitante
+        +agregarJugador(Jugadores)
+        +removerJugador(Jugadores)
+    }
+
+    class Jugadores {
+        -Long idJugador
+        -String nombre
+        -LocalDate fechaNacimiento
+        -Equipos equipo
+        -Posiciones posicion
+        -List~Goles~ goles
+    }
+
+    class Posiciones {
+        -Long idPosicion
+        -String nombre
+        -List~Jugadores~ jugadores
+    }
+
+    class Partidos {
+        -Long idPartido
+        -Equipos equipoLocal
+        -Equipos equipoVisitante
+        -Integer golesLocal
+        -Integer golesVisitante
+        -LocalDate fechaPartido
+        -List~Goles~ goles
+        +agregarGol(Goles)
+    }
+
+    class Goles {
+        -Long idGol
+        -Partidos partido
+        -Jugadores jugador
+        -Integer minuto
+    }
+
+%% CAPA DAO
+    class GenericDAO~T ID~ {
+<<abstract>>
+#Class~T~ entityClass
++crear(T)
++actualizar(T)
++eliminar(ID)
++buscarPorId(ID) Optional~T~
++listarTodos() List~T~
++contar() long
+}
+
+class EquiposDAO {
++buscarPorNombre(String) Optional~Equipos~
++buscarPorNombreParcial(String) List~Equipos~
++buscarConJugadores(Long) Optional~Equipos~
+    }
+
+class JugadoresDAO {
++buscarPorEquipo(Long) List~Jugadores~
++buscarPorPosicion(Long) List~Jugadores~
++buscarSinPosicion() List~Jugadores~
++listarConDetalles() List~Jugadores~
+}
+
+class PosicionesDAO {
++buscarPorNombre(String) Optional~Posiciones~
++buscarConJugadores(Long) Optional~Posiciones~
+    }
+
+class PartidosDAO {
++buscarPorEquipo(Long) List~Partidos~
++buscarPorFecha(LocalDate) List~Partidos~
++buscarConDetalles(Long) Optional~Partidos~
++listarTodosConDetalles() List~Partidos~
+}
+
+class GolesDAO {
++buscarPorPartido(Long) List~Goles~
++buscarPorJugador(Long) List~Goles~
++contarGolesPorJugador(Long) long
++obtenerMaximosGoleadores(int) List~Object[]~
+}
+
+%% CAPA DE SERVICIOS - INTERFACES
+class IEquiposService {
+<<interface>>
++crearEquipo(String)
++actualizarEquipo(Long, String)
++eliminarEquipo(Long)
++buscarEquipoPorId(Long) Optional~Equipos~
++listarTodosLosEquipos() List~Equipos~
+}
+
+class IJugadoresService {
+<<interface>>
++crearJugador(String, LocalDate, Long)
++actualizarJugador(Long, String, LocalDate, Long)
++eliminarJugador(Long)
++asignarPosicion(Long, Long)
++buscarJugadoresPorEquipo(Long) List~Jugadores~
+    }
+
+class IPartidosService {
+<<interface>>
++crearPartido(Long, Long, LocalDate)
++actualizarResultado(Long, Integer, Integer)
++eliminarPartido(Long)
++listarPartidosConDetalles() List~Partidos~
+}
+
+class IGolesService {
+<<interface>>
++registrarGol(Long, Long, Integer)
++eliminarGol(Long)
++buscarGolesPorPartido(Long) List~Goles~
++obtenerMaximosGoleadores(int) List~Object[]~
+    }
+
+%% CAPA DE SERVICIOS - IMPLEMENTACIONES
+class EquiposServiceImpl {
+-EquiposDAO equiposDAO
++crearEquipo(String)
++actualizarEquipo(Long, String)
++eliminarEquipo(Long)
+}
+
+class JugadoresServiceImpl {
+-JugadoresDAO jugadoresDAO
+-EquiposDAO equiposDAO
+-PosicionesDAO posicionesDAO
++crearJugador(String, LocalDate, Long)
++asignarPosicion(Long, Long)
+    }
+
+class PartidosServiceImpl {
+-PartidosDAO partidosDAO
+-EquiposDAO equiposDAO
++crearPartido(Long, Long, LocalDate)
++actualizarResultado(Long, Integer, Integer)
+}
+
+class GolesServiceImpl {
+-GolesDAO golesDAO
+-PartidosDAO partidosDAO
+-JugadoresDAO jugadoresDAO
++registrarGol(Long, Long, Integer)
+}
+
+%% CAPA DE PRESENTACIÓN
+class EquiposServlet {
+<<HttpServlet>>
+-IEquiposService equiposService
++doGet(HttpServletRequest, HttpServletResponse)
++doPost(HttpServletRequest, HttpServletResponse)
+-listarEquipos()
+-crearEquipo()
+-actualizarEquipo()
+-eliminarEquipo()
+}
+
+class JugadoresServlet {
+<<HttpServlet>>
+-IJugadoresService jugadoresService
+-IEquiposService equiposService
+-IPosicionesService posicionesService
++doGet(HttpServletRequest, HttpServletResponse)
++doPost(HttpServletRequest, HttpServletResponse)
+}
+
+class PartidosServlet {
+<<HttpServlet>>
+-IPartidosService partidosService
+-IEquiposService equiposService
++doGet(HttpServletRequest, HttpServletResponse)
++doPost(HttpServletRequest, HttpServletResponse)
+}
+
+class GolesServlet {
+<<HttpServlet>>
+-IGolesService golesService
+-IPartidosService partidosService
+-IJugadoresService jugadoresService
++doGet(HttpServletRequest, HttpServletResponse)
++doPost(HttpServletRequest, HttpServletResponse)
+}
+
+class JPAUtil {
+<<utility>>
+-EntityManagerFactory emf
++getEntityManager() EntityManager
++close()
+}
+
+%% RELACIONES ENTRE ENTIDADES
+Equipos "1" --> "*" Jugadores : tiene
+Equipos "1" --> "*" Partidos : juega como local
+Equipos "1" --> "*" Partidos : juega como visitante
+Posiciones "1" --> "*" Jugadores : asignada a
+Jugadores "1" --> "*" Goles : anota
+Partidos "1" --> "*" Goles : registra
+
+%% RELACIONES CAPA DAO
+GenericDAO <|-- EquiposDAO : extends
+GenericDAO <|-- JugadoresDAO : extends
+GenericDAO <|-- PosicionesDAO : extends
+GenericDAO <|-- PartidosDAO : extends
+GenericDAO <|-- GolesDAO : extends
+
+EquiposDAO ..> Equipos : uses
+JugadoresDAO ..> Jugadores : uses
+PosicionesDAO ..> Posiciones : uses
+PartidosDAO ..> Partidos : uses
+GolesDAO ..> Goles : uses
+
+GenericDAO ..> JPAUtil : uses
+
+%% RELACIONES CAPA SERVICIOS
+IEquiposService <|.. EquiposServiceImpl : implements
+IJugadoresService <|.. JugadoresServiceImpl : implements
+IPartidosService <|.. PartidosServiceImpl : implements
+IGolesService <|.. GolesServiceImpl : implements
+
+EquiposServiceImpl --> EquiposDAO : uses
+JugadoresServiceImpl --> JugadoresDAO : uses
+JugadoresServiceImpl --> EquiposDAO : uses
+JugadoresServiceImpl --> PosicionesDAO : uses
+PartidosServiceImpl --> PartidosDAO : uses
+PartidosServiceImpl --> EquiposDAO : uses
+GolesServiceImpl --> GolesDAO : uses
+GolesServiceImpl --> PartidosDAO : uses
+GolesServiceImpl --> JugadoresDAO : uses
+
+%% RELACIONES CAPA PRESENTACIÓN
+EquiposServlet --> IEquiposService : uses
+JugadoresServlet --> IJugadoresService : uses
+PartidosServlet --> IPartidosService : uses
+GolesServlet --> IGolesService : uses
