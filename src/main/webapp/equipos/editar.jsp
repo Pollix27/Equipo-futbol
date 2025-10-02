@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-edit"></i> Editar Equipo</h2>
+    <h2>Editar Equipo</h2>
 
     <div class="card">
         <div class="card-body">
@@ -25,10 +25,10 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Actualizar
+                    Actualizar
                 </button>
                 <a href="${pageContext.request.contextPath}/equipos" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Cancelar
+                    Cancelar
                 </a>
             </form>
         </div>

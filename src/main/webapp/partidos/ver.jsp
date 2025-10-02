@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-info-circle"></i> Detalles del Partido</h2>
+    <h2>Detalles del Partido</h2>
 
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -41,10 +41,10 @@
     <div class="card">
         <div class="card-header">
             <h5 class="mb-0">
-                <i class="fas fa-futbol"></i> Goles del Partido
+                Goles del Partido
                 <a href="${pageContext.request.contextPath}/goles?action=registrar&idPartido=${partido.idPartido}"
                    class="btn btn-sm btn-success float-right">
-                    <i class="fas fa-plus"></i> Registrar Gol
+                    Registrar Gol
                 </a>
             </h5>
         </div>
@@ -81,7 +81,7 @@
 
     <div class="mt-3">
         <a href="${pageContext.request.contextPath}/partidos" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Volver a Partidos
+            Volver a Partidos
         </a>
     </div>
 </div>
