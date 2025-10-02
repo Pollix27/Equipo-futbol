@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-plus-circle"></i> Registrar Gol</h2>
+    <h2>Registrar Gol</h2>
 
     <div class="card">
         <div class="card-body">
@@ -59,11 +59,11 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Registrar Gol
+                            Registrar Gol
                         </button>
                         <a href="${pageContext.request.contextPath}/partidos?action=ver&id=${partido.idPartido}"
                            class="btn btn-secondary">
-                            <i class="fas fa-times"></i> Cancelar
+                            Cancelar
                         </a>
                     </form>
                 </c:when>
@@ -100,7 +100,7 @@
 
                     <div class="mt-3">
                         <a href="${pageContext.request.contextPath}/goles" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Volver
+                            Volver
                         </a>
                     </div>
                 </c:otherwise>

@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-futbol"></i> Gestión de Partidos</h2>
+    <h2>Gestión de Partidos</h2>
 
     <c:if test="${not empty mensaje}">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,7 +28,7 @@
 
     <div class="mb-3">
         <a href="${pageContext.request.contextPath}/partidos?action=nuevo" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Partido
+            Partido
         </a>
     </div>
 
@@ -60,16 +60,16 @@
                         <td>
                             <a href="${pageContext.request.contextPath}/partidos?action=ver&id=${partido.idPartido}"
                                class="btn btn-sm btn-info">
-                                <i class="fas fa-eye"></i> Ver
+                                Ver
                             </a>
                             <a href="${pageContext.request.contextPath}/goles?action=registrar&idPartido=${partido.idPartido}"
                                class="btn btn-sm btn-success">
-                                <i class="fas fa-futbol"></i> Gol
+                                Gol
                             </a>
                             <a href="${pageContext.request.contextPath}/partidos?action=eliminar&id=${partido.idPartido}"
                                class="btn btn-sm btn-danger"
                                onclick="return confirm('¿Está seguro de eliminar este partido?')">
-                                <i class="fas fa-trash"></i> Eliminar
+                                Eliminar
                             </a>
                         </td>
                     </tr>

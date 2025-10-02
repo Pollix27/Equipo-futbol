@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-user"></i> Gestión de Jugadores</h2>
+    <h2>Gestión de Jugadores</h2>
 
     <c:if test="${not empty mensaje}">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,7 +28,7 @@
 
     <div class="mb-3">
         <a href="${pageContext.request.contextPath}/jugadores?action=nuevo" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Jugador
+            Nuevo Jugador
         </a>
     </div>
 
@@ -65,16 +65,16 @@
                         <td>
                             <a href="${pageContext.request.contextPath}/jugadores?action=editar&id=${jugador.idJugador}"
                                class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Editar
+                                Editar
                             </a>
                             <a href="${pageContext.request.contextPath}/jugadores?action=asignarPosicion&id=${jugador.idJugador}"
                                class="btn btn-sm btn-info">
-                                <i class="fas fa-map-marker-alt"></i> Posición
+                                Posición
                             </a>
                             <a href="${pageContext.request.contextPath}/jugadores?action=eliminar&id=${jugador.idJugador}"
                                class="btn btn-sm btn-danger"
                                onclick="return confirm('¿Está seguro de eliminar este jugador?')">
-                                <i class="fas fa-trash"></i> Eliminar
+                                Eliminar
                             </a>
                         </td>
                     </tr>

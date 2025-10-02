@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>NGINX by TEMPLATED</title>
+		<title>NGINX - Torneo de Futbol</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -10,7 +10,7 @@
 
 		<!-- Header -->
 			<header id="header">
-				<div class="logo"><a href="index.jsp">NGINX <span>by TEMPLATED</span></a></div>
+				<div class="logo"><a href="index.jsp">NGINX </a></div>
 				<a href="#menu">Menu</a>
 			</header>
 
@@ -22,7 +22,6 @@
 					<li><a href= ${pageContext.request.contextPath}/jugadores>Jugadores</a></li>
                     <li><a href= ${pageContext.request.contextPath}/partidos>Partidos</a></li>
                     <li><a href= ${pageContext.request.contextPath}/goles>Goles</a></li>
-                    <li><a href= ${pageContext.request.contextPath}/Posiciones>Posiciones</a></li>
 				</ul>
 			</nav>
 

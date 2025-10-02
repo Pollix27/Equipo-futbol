@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-map-marker-alt"></i> Asignar Posición a Jugador</h2>
+    <h2>Asignar Posición a Jugador</h2>
 
     <div class="card">
         <div class="card-body">
@@ -46,10 +46,10 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Asignar Posición
+                    Asignar Posición
                 </button>
                 <a href="${pageContext.request.contextPath}/jugadores" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Cancelar
+                    Cancelar
                 </a>
             </form>
         </div>
