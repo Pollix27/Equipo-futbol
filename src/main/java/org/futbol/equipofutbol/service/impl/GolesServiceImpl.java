@@ -33,14 +33,18 @@ public class GolesServiceImpl implements IGolesService {
             throw new IllegalArgumentException("El minuto debe estar entre 0 y 120");
         }
 
-        // Verificar que el partido existe
-        Optional<Partidos> partidoOpt = partidosDAO.buscarPorId(idPartido);
+        // IMPORTANTE: Usar buscarConDetalles para cargar todas las relaciones
+        Optional<Partidos> partidoOpt = partidosDAO.buscarConDetalles(idPartido);
         if (partidoOpt.isEmpty()) {
             throw new IllegalArgumentException("No existe un partido con ID: " + idPartido);
         }
 
-        // Verificar que el jugador existe
-        Optional<Jugadores> jugadorOpt = jugadoresDAO.buscarPorId(idJugador);
+        // Cargar jugador con sus relaciones
+        List<Jugadores> jugadoresCompletos = jugadoresDAO.listarConDetalles();
+        Optional<Jugadores> jugadorOpt = jugadoresCompletos.stream()
+                .filter(j -> j.getIdJugador().equals(idJugador))
+                .findFirst();
+
         if (jugadorOpt.isEmpty()) {
             throw new IllegalArgumentException("No existe un jugador con ID: " + idJugador);
         }
@@ -48,18 +52,29 @@ public class GolesServiceImpl implements IGolesService {
         Partidos partido = partidoOpt.get();
         Jugadores jugador = jugadorOpt.get();
 
-        // Verificar que el jugador pertenece a uno de los equipos del partido
-        if (!jugador.getEquipo().equals(partido.getEquipoLocal()) &&
-                !jugador.getEquipo().equals(partido.getEquipoVisitante())) {
-            throw new IllegalArgumentException("El jugador no pertenece a ninguno de los equipos del partido");
+        // Comparar por IDs directamente
+        Long idEquipoJugador = jugador.getEquipo().getIdEquipo();
+        Long idEquipoLocal = partido.getEquipoLocal().getIdEquipo();
+        Long idEquipoVisitante = partido.getEquipoVisitante().getIdEquipo();
+
+        // Verificación con logging para debug
+        System.out.println("DEBUG - ID Equipo Jugador: " + idEquipoJugador);
+        System.out.println("DEBUG - ID Equipo Local: " + idEquipoLocal);
+        System.out.println("DEBUG - ID Equipo Visitante: " + idEquipoVisitante);
+
+        if (!idEquipoJugador.equals(idEquipoLocal) && !idEquipoJugador.equals(idEquipoVisitante)) {
+            throw new IllegalArgumentException("El jugador no pertenece a ninguno de los equipos del partido. " +
+                    "Jugador equipo ID: " + idEquipoJugador +
+                    ", Local ID: " + idEquipoLocal +
+                    ", Visitante ID: " + idEquipoVisitante);
         }
 
-        // Crear el gol
+        // Crear el gol con un nuevo EntityManager
         Goles gol = new Goles(partido, jugador, minuto);
         golesDAO.crear(gol);
 
-        // Actualizar el marcador del partido
-        if (jugador.getEquipo().equals(partido.getEquipoLocal())) {
+        // Actualizar marcador
+        if (idEquipoJugador.equals(idEquipoLocal)) {
             partido.setGolesLocal(partido.getGolesLocal() + 1);
         } else {
             partido.setGolesVisitante(partido.getGolesVisitante() + 1);

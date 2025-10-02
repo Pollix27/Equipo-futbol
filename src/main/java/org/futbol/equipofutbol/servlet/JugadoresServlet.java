@@ -123,16 +123,34 @@ public class JugadoresServlet extends HttpServlet {
 
     private void mostrarFormularioAsignarPosicion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
-        Optional<Jugadores> jugador = jugadoresService.buscarJugadorPorId(id);
+        try {
+            Long id = Long.parseLong(request.getParameter("id"));
 
-        if (jugador.isPresent()) {
-            List<Posiciones> listaPosiciones = posicionesService.listarTodasLasPosiciones();
-            request.setAttribute("jugador", jugador.get());
-            request.setAttribute("listaPosiciones", listaPosiciones);
-            request.getRequestDispatcher("/jugadores/asignarPosicion.jsp").forward(request, response);
-        } else {
-            request.setAttribute("error", "Jugador no encontrado");
+            // Cargar jugador con todas sus relaciones
+            List<Jugadores> jugadoresCompletos = jugadoresService.listarJugadoresConDetalles();
+            Optional<Jugadores> jugadorOpt = jugadoresCompletos.stream()
+                    .filter(j -> j.getIdJugador().equals(id))
+                    .findFirst();
+
+            if (jugadorOpt.isPresent()) {
+                List<Posiciones> listaPosiciones = posicionesService.listarTodasLasPosiciones();
+
+                // Verificar que hay posiciones disponibles
+                if (listaPosiciones.isEmpty()) {
+                    request.setAttribute("error", "No hay posiciones registradas. Debe crear posiciones primero.");
+                    listarJugadores(request, response);
+                    return;
+                }
+
+                request.setAttribute("jugador", jugadorOpt.get());
+                request.setAttribute("listaPosiciones", listaPosiciones);
+                request.getRequestDispatcher("/jugadores/asignarPosicion.jsp").forward(request, response);
+            } else {
+                request.setAttribute("error", "Jugador no encontrado");
+                listarJugadores(request, response);
+            }
+        } catch (Exception e) {
+            request.setAttribute("error", "Error al cargar el jugador: " + e.getMessage());
             listarJugadores(request, response);
         }
     }

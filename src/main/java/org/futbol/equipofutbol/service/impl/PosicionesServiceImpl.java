@@ -96,9 +96,10 @@ public class PosicionesServiceImpl implements IPosicionesService {
                 "Defensa Central",
                 "Lateral Derecho",
                 "Lateral Izquierdo",
-                "Mediocampista Defensivo",
-                "Mediocampista Central",
-                "Mediocampista Ofensivo",
+                "Mediocampista Interior Der",
+                "Mediocampista Contension",
+                "Mediocampista Interior Izq",
+                "Enganche",
                 "Extremo Derecho",
                 "Extremo Izquierdo",
                 "Delantero Centro"

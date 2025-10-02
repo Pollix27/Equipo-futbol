@@ -10,7 +10,7 @@
 <jsp:include page="../11.jsp" />
 
 <div class="container mt-4">
-    <h2><i class="fas fa-users"></i> Gestión de Equipos</h2>
+    <h2>Gestión de Equipos</h2>
 
     <c:if test="${not empty mensaje}">
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,7 +28,7 @@
 
     <div class="mb-3">
         <a href="${pageContext.request.contextPath}/equipos?action=nuevo" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Equipo
+            Nuevo Equipo
         </a>
     </div>
 
@@ -49,13 +49,13 @@
                         <td>${equipo.nombre}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/equipos?action=editar&id=${equipo.idEquipo}"
-                               class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i> Editar
+                               class="btn btn-warning" style="margin: 2px; padding: 8px 16px; border-radius: 5px;">
+                                Editar
                             </a>
                             <a href="${pageContext.request.contextPath}/equipos?action=eliminar&id=${equipo.idEquipo}"
                                class="btn btn-sm btn-danger"
                                onclick="return confirm('¿Está seguro de eliminar este equipo?')">
-                                <i class="fas fa-trash"></i> Eliminar
+                                Eliminar
                             </a>
                         </td>
                     </tr>

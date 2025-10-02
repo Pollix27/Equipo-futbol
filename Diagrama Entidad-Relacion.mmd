@@ -1,17 +1,16 @@
 erDiagram
-    EQUIPOS ||--o{ JUGADORES : "tiene"
-    EQUIPOS ||--o{ PARTIDOS : "juega_local"
-    EQUIPOS ||--o{ PARTIDOS : "juega_visitante"
-    JUGADORES }o--|| POSICIONES : "tiene"
-    JUGADORES ||--o{ GOLES : "anota"
-    PARTIDOS ||--o{ GOLES : "registra"
+    EQUIPO ||--o{ JUGADOR : "tiene"
+    EQUIPO ||--o{ PARTIDO : "juega"
+    JUGADOR }o--o{ POSICION : "tiene"
+    JUGADOR ||--o{ GOL : "anota"
+    PARTIDO ||--o{ GOL : "registra"
 
-    EQUIPOS {
+    EQUIPO {
         bigint id_equipo PK
         varchar nombre
     }
 
-    JUGADORES {
+    JUGADOR {
         bigint id_jugador PK
         varchar nombre
         date fecha_nacimiento
@@ -19,12 +18,12 @@ erDiagram
         bigint id_posicion FK
     }
 
-    POSICIONES {
+    POSICION {
         bigint id_posicion PK
         varchar nombre
     }
 
-    PARTIDOS {
+    PARTIDO {
         bigint id_partido PK
         bigint id_equipo_local FK
         bigint id_equipo_visitante FK
@@ -33,7 +32,7 @@ erDiagram
         date fecha_partido
     }
 
-    GOLES {
+    GOL {
         bigint id_gol PK
         bigint id_partido FK
         bigint id_jugador FK

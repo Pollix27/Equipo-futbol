@@ -154,7 +154,6 @@ class GolesServiceImpl {
 
 %% CAPA DE PRESENTACIÓN
 class EquiposServlet {
-<<HttpServlet>>
 -IEquiposService equiposService
 +doGet(HttpServletRequest, HttpServletResponse)
 +doPost(HttpServletRequest, HttpServletResponse)
@@ -165,7 +164,6 @@ class EquiposServlet {
 }
 
 class JugadoresServlet {
-<<HttpServlet>>
 -IJugadoresService jugadoresService
 -IEquiposService equiposService
 -IPosicionesService posicionesService
@@ -174,7 +172,6 @@ class JugadoresServlet {
 }
 
 class PartidosServlet {
-<<HttpServlet>>
 -IPartidosService partidosService
 -IEquiposService equiposService
 +doGet(HttpServletRequest, HttpServletResponse)
@@ -182,7 +179,6 @@ class PartidosServlet {
 }
 
 class GolesServlet {
-<<HttpServlet>>
 -IGolesService golesService
 -IPartidosService partidosService
 -IJugadoresService jugadoresService

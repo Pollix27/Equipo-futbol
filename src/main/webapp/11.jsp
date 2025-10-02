@@ -22,6 +22,7 @@
 					<li><a href= ${pageContext.request.contextPath}/jugadores>Jugadores</a></li>
                     <li><a href= ${pageContext.request.contextPath}/partidos>Partidos</a></li>
                     <li><a href= ${pageContext.request.contextPath}/goles>Goles</a></li>
+                    <li><a href= ${pageContext.request.contextPath}/Posiciones>Posiciones</a></li>
 				</ul>
 			</nav>
 
@@ -29,8 +30,9 @@
 			<section id="One" class="wrapper style3">
 				<div class="inner">
 					<header class="align-center">
-						<p>Pollix27 & Kernel-apt</p>
-						<h2>Torneo de Futbol</h2>
+                        <p>UACM San Lorenzo Tezonco</p>
+						<p>Pollix27 - Kernel-apt - Richard</p>
+						<h2> Sistema de Gesti&oacute;n de Torneo de F&uacute;tbol</h2>
 					</header>
 				</div>
 			</section>
